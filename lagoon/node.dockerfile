@@ -17,8 +17,11 @@ ARG LAGOON_ENVIRONMENT_TYPE
 ########################################################
 COPY --from=builder /app /app
 COPY . /app
-RUN mkdir -p /home/.config/sanity \
-    && fix-permissions /home/.config/sanity
+RUN mkdir -p /home/.config \
+    && fix-permissions /home/.config \
+    && mkdir -p /tmp/sanitycnf \
+    && fix-permissions /tmp/sanitycnf \
+    && ln -s /tmp/sanitycnf /home/.config/sanity
 
 RUN if [[ ! -z "$LAGOON_ENVIRONMENT_TYPE" ]]; then \
 		echo "$LAGOON_ENVIRONMENT_TYPE: Running production build"; \

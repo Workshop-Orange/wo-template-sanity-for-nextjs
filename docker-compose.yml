@@ -12,7 +12,7 @@ services:
       context: .
       dockerfile: lagoon/node.dockerfile
     labels:
-      lagoon.type: none
+      lagoon.type: node
     volumes:
       - .:/app:delegated
     environment:

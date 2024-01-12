@@ -18,23 +18,18 @@ ARG LAGOON_ENVIRONMENT_TYPE
 COPY --from=builder /app /app
 COPY . /app
 
-RUN mkdir -p /tmp/_config && chmod 777 /tmp/_config 
-RUN mkdir -p /tmp/_npm_cache && chmod 777 /tmp/_npm_cache
-RUN mkdir -p /tmp/_npm_logs && chmod 777 /tmp/_npm_logs
-RUN mkdir -p /tmp/_npm_config && chmod 777 /tmp/_npm_config
- 
-ARG XDG_CONFIG_HOME="/tmp/_config"
-
-RUN npm config set prefix "/tmp/_npm_config" \
-  && npm config set logs-dir "/tmp/_npm_logs" \
-  && npm config set cache "/tmp/_npm_cache"
-
 RUN if [[ ! -z "$LAGOON_ENVIRONMENT_TYPE" ]]; then \
 		echo "$LAGOON_ENVIRONMENT_TYPE: Running production build"; \
 		npm run build; \
 	else \
 		echo "Seems to be running locally: Skipping production build"; \
 	fi
+
+RUN mkdir /home/.config/sanity 
+  && touch /home/.config/sanity/config.json
+  && fix-permissions /home/.config
+  && fix-permissions /home/.npm
+  && fix-permissions /home/node
 
 ########################################################
 # Set the command to run

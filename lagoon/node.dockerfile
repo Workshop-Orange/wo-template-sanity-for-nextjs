@@ -18,7 +18,7 @@ ARG LAGOON_ENVIRONMENT_TYPE
 COPY --from=builder /app /app
 COPY . /app
 
-RUN mkdir -p /tmp/_config && fix-permissions /tmp/_config
+RUN mkdir -p /tmp/_config && chmod 777 /tmp/_config 
 ARG XDG_CONFIG_HOME="/tmp/_config"
 
 RUN npm config set prefix "/tmp/_npm_config" \

@@ -18,11 +18,11 @@ ARG LAGOON_ENVIRONMENT_TYPE
 COPY --from=builder /app /app
 COPY . /app
 
-RUN if [[ "$LAGOON_ENVIRONMENT_TYPE" == "production" ]]; then \
+RUN if [[ ! -z "$LAGOON_ENVIRONMENT_TYPE" ]]; then \
 		echo "$LAGOON_ENVIRONMENT_TYPE: Running production build"; \
 		npm run build; \
 	else \
-		echo "$LAGOON_ENVIRONMENT_TYPE: Skipping production build"; \
+		echo "Seems to be running locally: Skipping production build"; \
 	fi
 
 ########################################################

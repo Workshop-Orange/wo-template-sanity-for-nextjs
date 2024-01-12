@@ -25,7 +25,7 @@ RUN if [[ ! -z "$LAGOON_ENVIRONMENT_TYPE" ]]; then \
 		echo "Seems to be running locally: Skipping production build"; \
 	fi
 
-RUN mkdir /home/.config/sanity \
+RUN if [[ ! -d "/home/.config/sanity" ]]; then mkdir -p /home/.config/sanity; fi \
   && touch /home/.config/sanity/config.json \
   && fix-permissions /home/.config \
   && fix-permissions /home/.npm \

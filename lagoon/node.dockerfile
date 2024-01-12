@@ -19,6 +19,10 @@ COPY --from=builder /app /app
 COPY . /app
 
 RUN mkdir -p /tmp/_config && chmod 777 /tmp/_config 
+RUN mkdir -p /tmp/_npm_cache && chmod 777 /tmp/_npm_cache
+RUN mkdir -p /tmp/_npm_logs && chmod 777 /tmp/_npm_logs
+RUN mkdir -p /tmp/_npm_config && chmod 777 /tmp/_npm_config
+ 
 ARG XDG_CONFIG_HOME="/tmp/_config"
 
 RUN npm config set prefix "/tmp/_npm_config" \

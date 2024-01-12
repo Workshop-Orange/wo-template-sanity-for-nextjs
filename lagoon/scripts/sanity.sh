@@ -2,16 +2,10 @@
 
 echo Your studio will be available shortly: $LAGOON_ROUTE
 
-if [ -d "/home/.config" ]; then
-	fix-permissions /home/.config
-fi
+export XDG_CONFIG_HOME="/tmp/_config"
 
-if [ -d "/app/.cache" ]; then
-	fix-permissions /app/.cache
-fi
-
-if [ -d "/app/public" ]; then
-	fix-permissions /app/public
+if [ -d "/tmp/_config" ]; then
+	fix-permissions /tmp/_config
 fi
 
 if [ ! -z "$LAGOON_ENVIRONMENT_TYPE" ]; then

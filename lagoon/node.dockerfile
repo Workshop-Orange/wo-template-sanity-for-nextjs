@@ -17,11 +17,13 @@ ARG LAGOON_ENVIRONMENT_TYPE
 ########################################################
 COPY --from=builder /app /app
 COPY . /app
-RUN mkdir -p /home/.config \
-    && fix-permissions /home/.config \
-    && mkdir -p /tmp/sanitycnf \
-    && fix-permissions /tmp/sanitycnf \
-    && ln -s /tmp/sanitycnf /home/.config/sanity
+
+RUN mkdir -p /tmp/_config && fix-permissions /tmp/_config
+ARG XDG_CONFIG_HOME="/tmp/_config"
+
+RUN npm config set prefix "/tmp/_npm_config" \
+  && npm config set logs-dir "/tmp/_npm_logs" \
+  && npm config set cache "/tmp/_npm_cache"
 
 RUN if [[ ! -z "$LAGOON_ENVIRONMENT_TYPE" ]]; then \
 		echo "$LAGOON_ENVIRONMENT_TYPE: Running production build"; \
